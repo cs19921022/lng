@@ -5,12 +5,12 @@ package cn.edu.hdu.lab505.innovation.domain.data;
  */
 public class Data {
     private long timestamp;
-    private float value;
+    private String value;
 
     public Data() {
     }
 
-    public Data(long timestamp, float value) {
+    public Data(long timestamp, String value) {
         this.timestamp = timestamp;
         this.value = value;
     }
@@ -23,11 +23,11 @@ public class Data {
         this.timestamp = timestamp;
     }
 
-    public float getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(float value) {
+    public void setValue(String value) {
         this.value = value;
     }
 }

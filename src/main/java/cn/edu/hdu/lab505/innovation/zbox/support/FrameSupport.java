@@ -2,8 +2,10 @@ package cn.edu.hdu.lab505.innovation.zbox.support;
 
 import cn.edu.hdu.lab505.innovation.util.ByteUtil;
 import cn.edu.hdu.lab505.innovation.zbox.domain.Frame;
+import org.apache.log4j.Logger;
 
 public class FrameSupport {
+    private static final Logger LOGGER = Logger.getLogger(FrameSupport.class);
     private Frame frameStructure;
     private String dataString;
     private int length;
@@ -102,6 +104,9 @@ public class FrameSupport {
         this.frameStructure.setReservedBits(reservedBits);
         this.frameStructure.setTerminalIidentification(terminalIidentification);
         this.check();
+        if (!isCorrect) {
+            LOGGER.info("数据校验发现错误");
+        }
     }
 
     public Frame getFrameStructure() {

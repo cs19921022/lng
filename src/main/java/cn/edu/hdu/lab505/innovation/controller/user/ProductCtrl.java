@@ -19,7 +19,7 @@ public class ProductCtrl {
     @Autowired
     private IProductService productService;
 
-    @Path("findProduct")
+    @Path("getProduct")
     @GET
     public List<Product> get(@QueryParam("accountId") int id) {
         return productService.findByAccountId(id);

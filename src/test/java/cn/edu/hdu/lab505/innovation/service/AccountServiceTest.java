@@ -1,6 +1,7 @@
 package cn.edu.hdu.lab505.innovation.service;
 
 import cn.edu.hdu.lab505.innovation.domain.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.domain.Product;
 import cn.edu.hdu.lab505.innovation.domain.domain.Role;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,13 +28,18 @@ public class AccountServiceTest {
     private IAccountService accountService;
     @Autowired
     private IRoleService roleService;
+    @Autowired
+    private IProductService productService;
 
     @Test
     @Transactional
     @Rollback(false)
     public void test() {
         Account account=accountService.get(1);
-        account.setName("admin");
-       accountService.updateIgnorePassword(account);
+        Product product = new Product();
+        product.setAccount(account);
+        product.setImei("2158730427");
+        product.setName("test");
+        productService.insert(product);
     }
 }

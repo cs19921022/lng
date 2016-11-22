@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
  * Created by hhx on 2016/11/19.
  */
 @Path("account")
-@Produces(MediaType.APPLICATION_JSON)
+
 @Consumes(MediaType.APPLICATION_JSON)
 public class AccountCtrl {
     @Autowired
@@ -23,6 +23,7 @@ public class AccountCtrl {
 
     @POST
     @Path("login")
+    @Produces(MediaType.TEXT_PLAIN)
     public String login(Account account) throws AccountNotFoundException, FailedLoginException {
         return accountService.login(account.getUsername(), account.getPassword());
 
@@ -30,6 +31,7 @@ public class AccountCtrl {
 
     @GET
     @Path("logout")
+    @Produces(MediaType.TEXT_PLAIN)
     public String logout(@QueryParam("token") String token) {
         accountService.logout(token);
         return "logout success";
@@ -37,6 +39,7 @@ public class AccountCtrl {
 
     @GET
     @Path("accountInfo")
+    @Produces(MediaType.APPLICATION_JSON)
     public Account getAccountInfo(@QueryParam("token") String token) throws CredentialExpiredException {
         return accountService.getAccountInfo(token);
     }

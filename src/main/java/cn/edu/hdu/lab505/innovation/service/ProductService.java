@@ -87,7 +87,7 @@ public class ProductService extends AbstractCurdServiceSupport<Product> implemen
 
     @Override
     @Transactional
-    public void addSensorData(int imei, float[] arrays) throws ImeiNotFoundException {
+    public void addSensorData(String imei,String[] arrays) throws ImeiNotFoundException {
         Product product = productDao.getByImei(imei);
         if (product == null) {
             throw new ImeiNotFoundException();

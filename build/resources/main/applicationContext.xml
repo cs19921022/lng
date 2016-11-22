@@ -132,4 +132,6 @@
         <constructor-arg value="${mongo.dbName}"/>
     </bean>
 
+    <bean id="springUtil" class="cn.edu.hdu.lab505.innovation.util.SpringUtil"/>
+
 </beans>

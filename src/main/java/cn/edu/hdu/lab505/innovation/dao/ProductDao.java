@@ -22,7 +22,7 @@ public class ProductDao extends AbstractHibernateCurdDaoSupport<Product> impleme
     }
 
     @Override
-    public Product getByImei(int imei) {
+    public Product getByImei(String imei) {
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Product.class);
         detachedCriteria.add(Restrictions.eq("imei", imei));
         List<Product> list = (List<Product>) getHibernateTemplate().findByCriteria(detachedCriteria);

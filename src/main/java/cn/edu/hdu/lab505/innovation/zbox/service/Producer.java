@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
+import java.util.Arrays;
 
 /**
  * Created by hhx on 2016/11/20.
@@ -36,7 +37,9 @@ public class Producer implements Runnable {
             socket = new DatagramSocket(PORT);
             while (true) {
                 socket.receive(inPacket);
-                dataQueueManager.put(inBuff);
+                LOGGER.debug("====收到udp=====");
+                int receivedLength=inPacket.getLength();
+                dataQueueManager.put(Arrays.copyOf(inBuff,receivedLength));
                 inPacket.setLength(DATA_LEN);
             }
         } catch (SocketException e) {

@@ -1,5 +1,6 @@
 package cn.edu.hdu.lab505.innovation.listen;
 
+import cn.edu.hdu.lab505.innovation.util.SpringUtil;
 import cn.edu.hdu.lab505.innovation.zbox.service.Consumer;
 import cn.edu.hdu.lab505.innovation.zbox.service.Producer;
 
@@ -35,7 +36,8 @@ public class UDPListener implements ServletContextListener {
 
 
         Producer producer = new Producer();
-        Consumer consumer = new Consumer();
+       // Consumer consumer = new Consumer();
+        Consumer consumer= (Consumer) SpringUtil.getBean("consumer");
         Thread pThread = new Thread(producer);
         Thread cThread = new Thread(consumer);
         pThread.start();

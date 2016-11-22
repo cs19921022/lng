@@ -11,5 +11,5 @@ import java.util.List;
 public interface IProductDao extends ICurdDaoSupport<Product> {
     List<Product> findByAccountId(int id);
 
-    Product getByImei(int imei);
+    Product getByImei(String imei);
 }

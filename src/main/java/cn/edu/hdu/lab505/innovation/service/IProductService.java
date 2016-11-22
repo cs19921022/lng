@@ -15,5 +15,5 @@ public interface IProductService extends ICurdServiceSupport<Product> {
 
     List<Product> findByAccountId(int id);
 
-    void addSensorData(int imei, float[] arrays) throws ImeiNotFoundException;
+    void addSensorData(String imei, String[] arrays) throws ImeiNotFoundException;
 }

@@ -15,7 +15,7 @@ public class ByteUtil {
                 sb.append(hex);
             }
         }
-        return sb.toString();
+        return sb.toString().toUpperCase();
     }
 
     /**

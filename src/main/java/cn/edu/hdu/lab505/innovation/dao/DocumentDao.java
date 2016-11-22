@@ -48,7 +48,7 @@ public class DocumentDao extends BasicDAO<Document, ObjectId> implements IDocume
     }
 
     @Override
-    public void update(Document document, float[] arrays) {
+    public void update(Document document, String[] arrays) {
         long timestamp = System.currentTimeMillis();
         Datastore datastore = getDatastore();
         UpdateOperations ops = datastore.createUpdateOperations(Document.class);
@@ -89,7 +89,8 @@ public class DocumentDao extends BasicDAO<Document, ObjectId> implements IDocume
     }
 
     @Override
-    public void add(int pid, float[] arrays) {
+    public void add(int pid, String[] arrays) {
+
         Document document = new Document();
         document.setProductId(pid);
         long timestamp = System.currentTimeMillis();
