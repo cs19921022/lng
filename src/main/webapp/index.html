@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"><!-- //viewport虚拟窗口，自动适应屏幕大小 -->
+    <title>lng</title>
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/commom.css">
+    <link rel="stylesheet" href="css/aside.css">
+    <link rel="stylesheet" herf="css/font-awesome.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap-addtabs.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="screen"/>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-addtabs.js"></script>
+  <!--   <script src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js"></script> -->
+    <!--[if lt IE 9]>
+    <script src="theme/js/html5shiv.min.js"></script>
+    <script src="theme/js/respond.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="js/nav.js"></script>
+</head>
+<body>
+    <header class="main-header">
+     <div class="navbar-custom-menu">
+      <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu open">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >
+            <img src="images/avatar.png" height="215" width="215" class="user-image">
+            <span class="hidden-xs">{{name}}</span>
+            </a>
+            <ul class="dropdown-menu">
+                 <li class="user-footer">
+                  <a id="changePassword" data-user-id="ee1a34d5-fde1-4d23-b177-889e179943a0" class="btn btn-default btn-flat">修改密码</a>
+                 </li>
+                 <li class="user-footer">
+                  <a href="login.html" class="btn btn-default btn-flat">退出登录</a>
+                 </li>
+            </ul>
+        </li>
+        <li>
+          <a href="login.html">退出</a>
+        </li>
+       </ul>    
+    </div>
+    </header>
+<div class="asidebar">
+    <div class="topbar-collapse">
+        <!--Button group-->
+        <div class="haschild"> 
+                 <span>
+                     <i class="glyphicon glyphicon-cog"></i>基本信息
+                     <span id="tubiao"class="glyphicon glyphicon-chevron-left"></span>
+                 </span>
+                 <a data-addtab="customimf" url="#">客户信息</a>
+                 <a data-addtab="poductimf" url="poductinfo.html">产品信息</a>
+        </div>
+        <div class="haschild"> 
+                 <span>
+                     <i class="glyphicon glyphicon-envelope"></i>产品运营信息
+                     <span id="tubiao" class="glyphicon glyphicon-chevron-left"></span>
+                 </span>
+                 <a data-addtab="runing" url="poductinfo.html">产品运行信息</a>
+                 <!-- <a data-addtab="b2" url="car.html"></i>槽车运行信息</a> -->
+        </div>
+        <div class="haschild"> 
+                 <span>
+                     <i class="glyphicon glyphicon-cog"></i>设置
+                     <span id="tubiao" class="glyphicon glyphicon-chevron-left"></span>
+                 </span>
+                 <a data-addtab="c1" url="canshu.html">参数设置</a>
+                 <a data-addtab="c2" url="daima.html">代码设置</a>
+        </div>
+    </div>
+  <div class="main">
+    <div id="tabs">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs navbar-inverse" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+</html>

@@ -1,0 +1,46 @@
+/* 
+* @Author: anchen
+* @Date:   2016-10-26 14:06:59
+* @Last Modified by:   anchen
+* @Last Modified time: 2016-11-09 16:45:15
+*/
+.asidebar{
+    width:100%;
+    height:150%;
+}
+.topbar-collapse{
+    width:15%;
+    height:100%;
+    background-color: #555;
+    position:relative;
+    top-padding:10px;
+    float:left;
+    padding-top: 50px;
+    color:#fff;
+}
+ .haschild{
+    background: #555;
+    color:#fff;
+    cursor:pointer;}
+ .highlight{
+    color:#fff;
+    background: green;}
+ .haschild>a{
+    background: #999;
+    display:none;
+    float:left;
+    width:100%;
+    line-height: 35px;}
+.haschild>span{
+    line-height: 35px;
+}
+.main{
+    width:85%;
+    height:100%;
+    float:right;
+}
+/*.sidemenu>a{
+    width:200px;
+    height:46px;
+    color:#fff;
+}*/

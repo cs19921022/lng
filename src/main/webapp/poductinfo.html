@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="screen"/>
+        <link rel="stylesheet" href="jquery-easyui-1.5/themes/default/easyui.css" type="text/css">
+        <link rel="stylesheet" href="css/demo.css" type="text/css">
+        <link rel="stylesheet" href="jquery-easyui-1.5/themes/icon.css" type="text/css">
+        <link rel="stylesheet" href="css/addproduct.css " type="text/css">
+         <script src="js/jquery.min.js"></script>
+         <script src="jquery-easyui-1.5/jquery.easyui.min.js"></script>
+         <script src="js/bootstrap.min.js"></script>
+         <style>
+         .row{
+            padding: 5px;
+         };
+         </style>
+    </head>
+    <body>
+       <!-- <div class="form-group">
+       <label> -->
+        <div class="row">
+          <div class="col-xs-12 col-md-3">
+            <div class="input-group">
+                <input id="normalSearch" type="text" name="tableAlias.productName" class="form-control" placeholder="请输入产品名称">
+                <span class="input-group-btn">
+                <button id="normalSearchBtn" class="btn btn-default" type="submit">
+                <span class="glyphicon glyphicon-search"></span>
+                </button>
+                </span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-3">
+                 <button id="addpuduct" class="btn btn-default" data-toggle="modal" data-target="#mymodal">
+                 添加记录
+                </button>
+          </div>
+        </div>
+      <!-- ****添加信息*****start -->
+      <div class="modal fade" id="mymodal">
+        <div class="modal-dialog">
+          <div class="modal-content addpuduct col-lg-12">
+             <div class="modal-header">
+             <h5>添加产品信息</h5>
+             </div>
+             <div class="modal-body">
+                 <div>
+                   <div class="form-group">
+                   <span class="red">*</span>
+                    <label for="custom">所属客户</label>
+                    <input type="text" class="form-control" id="custom" placeholder="请输入所属客户">
+                   </div>
+                   <div class="form-group">
+                   <span class="red">*</span>
+                    <label for="poductname">产品名称</label>
+                    <input type="text" class="form-control" id="custom" placeholder="请输入产品名称">
+                   </div>
+                   <div class="form-group">
+                     <span class="red">*</span>
+                     <label for="guige" >产品规格</label>
+                     <select class="form-control" id="guige">
+                       <option value="">15立方韩中</option>
+                       <option value="">5立方韩中</option>
+                       <option value="">15立方江氧</option>
+                       <option value="">50立方韩中</option>
+                       <option value="">100立方韩中</option>
+                     </select>
+                   </div>
+                   <div class="form-group">
+                    <span class="red">*</span>
+                    <label for="imei">IMEI</label>
+                    <input type="text" class="form-control" id="imei" placeholder="请输入IMEI">
+                   </div>
+                   <div class="form-group">
+                     <span class="red">*</span>
+                     <label for="xinghao">型号</label>
+                     <select class="form-control" id="xinghao">
+                       <option value="">新款</option>
+                       <option value="">旧款</option>
+                     </select>
+                   </div>
+                   <div class="form-group">
+                    <span class="red">*</span>
+                    <label for="address">产品地址</label>
+                    <input type="text" class="form-control" id="address" placeholder="请输入产品地址">
+                   </div>
+                </div>
+             </div>
+             <div class="modal-footer">
+                 <button class="btn" data-dismiss="modal">关闭</button>
+                 <button class="btn">提交</button>
+             </div>
+          </div>
+         </div>
+      </div>
+      <!-- ****添加信息*****end -->
+  <table id="dg" style="width:100%;height:400px"
+      data-options="rownumbers:true,
+                    singleSelect:true,
+                    pagination:true,
+                    url:'datagrid_data3.json',
+                    method:'get'">
+    <thead data-options="frozen:true">
+      <tr>
+        <th data-options="field:'productname',width:100">产品名称</th>
+        <th data-options="field:'custom',width:100">所属客户</th>
+        <th data-options="field:'data',width:100">数据时间</th>
+      </tr>
+    </thead>
+    <thead>
+      <tr>
+        <th data-options="field:'y1',width:90,align:'right'">储罐液位1</th>
+        <th data-options="field:'y2',width:90,align:'right'">储罐液位2</th>
+        <th data-options="field:'p1',width:90,align:'right'">储罐压力1</th>
+        <th data-options="field:'p2',width:90,align:'right'">储罐压力2</th>
+        <th data-options="field:'p3',width:90,align:'right'">气化后压力</th>
+        <th data-options="field:'t1',width:90,align:'right'">气化后温度</th>
+        <th data-options="field:'outf1',width:90,align:'right'">出口电磁阀1</th>
+        <th data-options="field:'outf2',width:90,align:'right'">出口电磁阀2</th>
+        <th data-options="field:'inf1',width:90,align:'right'">进口电磁阀1</th>
+        <th data-options="field:'inf2',width:90,align:'right'">进口电磁阀2</th>
+      </tr>
+    </thead>
+  </table> 
+  <script type="text/javascript">
+    $(function(){
+      var pager = $('#dg').datagrid().datagrid('getPager'); // get the pager of datagrid
+    })
+  </script>
+    </body>
+</html>
