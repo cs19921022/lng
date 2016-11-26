@@ -1,4 +1,6 @@
-package cn.edu.hdu.lab505.innovation.domain.domain;
+package cn.edu.hdu.lab505.innovation.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,10 +30,28 @@ public class Product implements Serializable {
     private String longitude;
     @Column
     private String latitude;
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "account_id",
+            foreignKey = @ForeignKey(name = "ACCOUNT_ID_FK"))
     private Account account;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @Transient
+    private SensorData data = new SensorData();
+
+    public SensorData getData() {
+        return data;
+    }
+
+    public void setData(SensorData data) {
+        this.data = data;
+    }
 
     public Product() {
+    }
+
+    public Product(int id) {
+        this.id = id;
     }
 
     public int getId() {

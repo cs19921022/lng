@@ -1,7 +1,7 @@
 package cn.edu.hdu.lab505.innovation.dao;
 
 import cn.edu.hdu.lab505.innovation.common.AbstractHibernateCurdDaoSupport;
-import cn.edu.hdu.lab505.innovation.domain.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.Account;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

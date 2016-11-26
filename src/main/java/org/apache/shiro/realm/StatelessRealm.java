@@ -1,7 +1,7 @@
 package org.apache.shiro.realm;
 
-import cn.edu.hdu.lab505.innovation.domain.domain.Account;
-import cn.edu.hdu.lab505.innovation.domain.domain.Role;
+import cn.edu.hdu.lab505.innovation.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.Role;
 import net.sf.ehcache.Cache;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;

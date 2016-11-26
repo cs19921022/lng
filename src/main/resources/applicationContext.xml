@@ -24,12 +24,41 @@
     </bean>
 
     <!-- 配置数据源 -->
-    <bean id="dataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--<bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="testOnBorrow" value="true" />
+    </bean>-->
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="filters" value="stat"/>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${druid.initialSize}"/>
+        <property name="minIdle" value="${druid.minIdle}"/>
+        <property name="maxActive" value="${druid.maxActive}"/>
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="maxWait" value="60000"/>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <!--建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。-->
+        <property name="testWhileIdle" value="true"/>
+        <!--申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。-->
+        <property name="testOnBorrow" value="false"/>
+        <!--归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能-->
+        <property name="testOnReturn" value="false"/>
+        <!--是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql下建议关闭。-->
+        <property name="poolPreparedStatements" value="false"/>
+        <property name="maxOpenPreparedStatements" value="20"/>
     </bean>
 
     <!-- 配置hibernate SessionFactory -->
@@ -42,7 +71,6 @@
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hiberante.format_sql">true</prop>
-
             </props>
         </property>
         <!-- mappingDirectoryLocations 指定映射文件目录 -->
@@ -53,7 +81,7 @@
         </property>-->
         <property name="packagesToScan">
             <list>
-                <value>cn.edu.hdu.lab505.innovation.domain.domain</value>
+                <value>cn.edu.hdu.lab505.innovation.domain</value>
             </list>
         </property>
 
@@ -115,22 +143,22 @@
     </bean>
 
     <!-- Morphia-->
-    <bean id="morphia" class="org.mongodb.morphia.Morphia">
-        <constructor-arg>
-            <set>
-                <value type="java.lang.Class">cn.edu.hdu.lab505.innovation.domain.data.Document</value>
-            </set>
-        </constructor-arg>
-    </bean>
-    <bean id="mongoClient" class="com.mongodb.MongoClient">
-        <constructor-arg value="${mongo.host}"/>
-        <constructor-arg value="${mongo.port}"/>
-    </bean>
-    <bean id="datastore" class="org.mongodb.morphia.DatastoreImpl">
-        <constructor-arg ref="morphia"/>
-        <constructor-arg ref="mongoClient"/>
-        <constructor-arg value="${mongo.dbName}"/>
-    </bean>
+    <!-- <bean id="morphia" class="org.mongodb.morphia.Morphia">
+         <constructor-arg>
+             <set>
+                 <value type="java.lang.Class">cn.edu.hdu.lab505.innovation.domain.data.Document</value>
+             </set>
+         </constructor-arg>
+     </bean>
+     <bean id="mongoClient" class="com.mongodb.MongoClient">
+         <constructor-arg value="${mongo.host}"/>
+         <constructor-arg value="${mongo.port}"/>
+     </bean>
+     <bean id="datastore" class="org.mongodb.morphia.DatastoreImpl">
+         <constructor-arg ref="morphia"/>
+         <constructor-arg ref="mongoClient"/>
+         <constructor-arg value="${mongo.dbName}"/>
+     </bean>-->
 
     <bean id="springUtil" class="cn.edu.hdu.lab505.innovation.util.SpringUtil"/>
 

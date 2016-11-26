@@ -1,7 +1,7 @@
 package cn.edu.hdu.lab505.innovation.dao;
 
 import cn.edu.hdu.lab505.innovation.common.ICurdDaoSupport;
-import cn.edu.hdu.lab505.innovation.domain.domain.Role;
+import cn.edu.hdu.lab505.innovation.domain.Role;
 
 /**
  * Created by hhx on 2016/11/19.

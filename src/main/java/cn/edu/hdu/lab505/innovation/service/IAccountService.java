@@ -1,7 +1,7 @@
 package cn.edu.hdu.lab505.innovation.service;
 
 import cn.edu.hdu.lab505.innovation.common.ICurdServiceSupport;
-import cn.edu.hdu.lab505.innovation.domain.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.Account;
 
 import javax.security.auth.login.AccountNotFoundException;
 import javax.security.auth.login.CredentialExpiredException;

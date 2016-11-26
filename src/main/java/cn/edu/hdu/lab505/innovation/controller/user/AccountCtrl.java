@@ -1,6 +1,6 @@
 package cn.edu.hdu.lab505.innovation.controller.user;
 
-import cn.edu.hdu.lab505.innovation.domain.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.Account;
 import cn.edu.hdu.lab505.innovation.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,7 +8,6 @@ import javax.security.auth.login.AccountNotFoundException;
 import javax.security.auth.login.CredentialExpiredException;
 import javax.security.auth.login.FailedLoginException;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 /**

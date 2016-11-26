@@ -1,5 +1,6 @@
 package cn.edu.hdu.lab505.innovation.controller;
 
+import cn.edu.hdu.lab505.innovation.service.Exception.SensorDataIndexOutOfBoundsException;
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -25,6 +26,9 @@ public class ExceptionMapperSupport implements ExceptionMapper<Exception> {
         // 处理unchecked exception
         if (exception instanceof LoginException) {
             statusCode = Status.UNAUTHORIZED;
+            message = exception.getMessage();
+        } else if (exception instanceof SensorDataIndexOutOfBoundsException) {
+            statusCode = Status.BAD_REQUEST;
             message = exception.getMessage();
         } else if (exception instanceof DuplicateKeyException) {
             statusCode = Status.CONFLICT;

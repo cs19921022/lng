@@ -1,4 +1,4 @@
-package cn.edu.hdu.lab505.innovation.domain.domain;
+package cn.edu.hdu.lab505.innovation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

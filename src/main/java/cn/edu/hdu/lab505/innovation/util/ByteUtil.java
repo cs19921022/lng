@@ -1,9 +1,17 @@
 package cn.edu.hdu.lab505.innovation.util;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+
 /**
  * Created by hhx on 2016/11/19.
  */
 public class ByteUtil {
+
+    public static float toFloat(byte[] b) {
+        ByteBuffer buf = ByteBuffer.wrap(b).order(ByteOrder.LITTLE_ENDIAN);
+        return buf.getFloat();
+    }
     public static String byteToString(byte[] a) {
         StringBuffer sb = new StringBuffer();
         for (Byte b : a) {

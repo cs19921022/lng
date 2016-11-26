@@ -2,18 +2,23 @@ package cn.edu.hdu.lab505.innovation.zbox.service;
 
 import cn.edu.hdu.lab505.innovation.service.Exception.ImeiNotFoundException;
 import cn.edu.hdu.lab505.innovation.service.IProductService;
+import cn.edu.hdu.lab505.innovation.service.ISensorDataService;
 import cn.edu.hdu.lab505.innovation.util.ByteUtil;
 import cn.edu.hdu.lab505.innovation.util.HexToFloatUtil;
 import cn.edu.hdu.lab505.innovation.zbox.DataQueueManager;
 import cn.edu.hdu.lab505.innovation.zbox.EFuncion;
 import cn.edu.hdu.lab505.innovation.zbox.domain.Frame;
 import cn.edu.hdu.lab505.innovation.zbox.domain.UpData;
+import cn.edu.hdu.lab505.innovation.zbox.support.DataSupport;
 import cn.edu.hdu.lab505.innovation.zbox.support.FrameSupport;
+import cn.edu.hdu.lab505.innovation.zbox.support.ProtocolSupport;
 import cn.edu.hdu.lab505.innovation.zbox.support.UpDataSupport;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -23,68 +28,74 @@ import java.util.List;
 public class Consumer implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(Consumer.class);
     private DataQueueManager dataQueueManager;
-    private FrameSupport frameSupport;
-    private UpDataSupport upDataSupport;
     @Autowired
-    private IProductService productService;
+    protected ISensorDataService sensorDataService;
+    @Autowired
+    private ProtocolSupport protocolSupport;
+    @Autowired
+    private DataSupport dataSupport;
 
     public Consumer() {
         this.dataQueueManager = DataQueueManager.getInstance();
-        this.frameSupport = new FrameSupport();
-        this.upDataSupport = new UpDataSupport();
-        // this.productService = new ProductService();
     }
 
-    private void saveData(Frame frame) {
-        upDataSupport.reset();
-        String content = frame.getInstructionContent();
-
-        upDataSupport.setDataString(content);
-        List<UpData> upData = upDataSupport.getUpdataFrame();
-        List<String> error = upDataSupport.getErrorId();
-        if (error.size() > 0) {
-            // 数据项采集失败
-            //LOGGER.info("====数据项采集失败=====");
-            //  return;
-        }
-        // 终端标识符，ZBOX板IMEI的后10位
-        String imei = frame.getTerminalIidentification();
+    @Transactional
+    private void insertData(byte[] bytes) {
+        dataSupport.reset();
+        dataSupport.setContent(bytes);
+        List<DataSupport.DataFrame> dataFrameList = dataSupport.getDataFrameList();
+        byte[] imei = protocolSupport.getTerminal();
         String[] arrays = new String[33];
-        for (int i = 0; i < upData.size(); i++) {
-            String data = upData.get(i).getData();
-            byte[] bs = ByteUtil.hexStringToByteArray(data);
-            float value = 0f;
-            try {
-                value = HexToFloatUtil.toFloat(bs);
-                arrays[i] = String.valueOf(value);
-            } catch (Exception e) {
-                arrays[i]=data;
-            }
+        for (int i = 0; i < dataFrameList.size(); i++) {
+            DataSupport.DataFrame dataFrame = dataFrameList.get(i);
+            byte dataId = dataFrame.getDataId();
+            byte[] data = dataFrame.getData();
+            if ((dataId > 0 && dataId < 7) || (dataId > 13 && dataId < 20) || (dataId > 21 && dataId < 34)) {
+                //浮点数
+                try {
+                    arrays[dataId - 1] = String.valueOf(ByteUtil.toFloat(data));
+                } catch (Exception e) {
+                    LOGGER.error(e);
+                }
 
+            } else {
+                //整形
+                if (data[0] == 0x00) {
+                    arrays[dataId - 1] = "关";
+                } else if (data[0] == 0x01) {
+                    arrays[dataId - 1] = "开";
+                }
+            }
         }
         try {
-            productService.addSensorData(imei, arrays);
+            sensorDataService.addSensorData(ByteUtil.byteToString(imei), arrays);
         } catch (ImeiNotFoundException e) {
             LOGGER.info(e);
         }
     }
 
+
     @Override
     public void run() {
         LOGGER.info("消费者线程启动");
         while (true) {
-            frameSupport.reset();
+
+            protocolSupport.reset();
             byte[] bytes = dataQueueManager.take();
-            frameSupport.setDataByteArr(bytes);
-            Frame frame = frameSupport.getFrameStructure();
-            boolean isCorrect = frameSupport.isCorrect();
+            protocolSupport.setByteArray(bytes);
+            boolean isCorrect = protocolSupport.isCorrect();
             if (!isCorrect) {
                 LOGGER.info("数据错误，丢弃!");
                 continue;
             }
-            String function = frame.getFunction();
-            if (function.equals(EFuncion.R_UP_UPDATA.getValue())) {
-                saveData(frame);
+            byte[] function = protocolSupport.getFunction();
+            if (function[0] == 0x00) {
+                try {
+                    insertData(protocolSupport.getContent());
+                } catch (Exception e) {
+                    LOGGER.error(e);
+                }
+
             }
         }
     }

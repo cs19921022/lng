@@ -2,25 +2,28 @@ package cn.edu.hdu.lab505.innovation.service;
 
 import cn.edu.hdu.lab505.innovation.common.AbstractCurdServiceSupport;
 import cn.edu.hdu.lab505.innovation.common.ICurdDaoSupport;
+import cn.edu.hdu.lab505.innovation.common.Page;
 import cn.edu.hdu.lab505.innovation.dao.IAccountDao;
-import cn.edu.hdu.lab505.innovation.dao.IDocumentDao;
 import cn.edu.hdu.lab505.innovation.dao.IProductDao;
-import cn.edu.hdu.lab505.innovation.domain.data.Data;
-import cn.edu.hdu.lab505.innovation.domain.data.Document;
-import cn.edu.hdu.lab505.innovation.domain.domain.Account;
-import cn.edu.hdu.lab505.innovation.domain.domain.Product;
-import cn.edu.hdu.lab505.innovation.domain.domain.Role;
+import cn.edu.hdu.lab505.innovation.dao.ISensorDataDao;
+import cn.edu.hdu.lab505.innovation.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.Product;
+import cn.edu.hdu.lab505.innovation.domain.Role;
+import cn.edu.hdu.lab505.innovation.domain.SensorData;
 import cn.edu.hdu.lab505.innovation.service.Exception.ImeiNotFoundException;
 import org.apache.log4j.Logger;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.query.UpdateOperations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hhx on 2016/11/19.
@@ -29,13 +32,53 @@ import java.util.List;
 @Service
 public class ProductService extends AbstractCurdServiceSupport<Product> implements IProductService {
     private static final Logger LOGGER = Logger.getLogger(ProductService.class);
-    private static final long ONE_HOUR = 60 * 60 * 1000;
     @Autowired
     private IProductDao productDao;
     @Autowired
     private IAccountDao accountDao;
+
     @Autowired
-    private IDocumentDao documentDao;
+    private ISensorDataDao sensorDataDao;
+
+
+    @Override
+    @Transactional
+    public Page<Product> findByAccountId(int id, int start, int limit) {
+        Account account = accountDao.get(id);
+        List<Role> roles = account.getRoleList();
+        Page<Product> page = null;
+        boolean isAdmin = false;
+        for (Role r : roles
+                ) {
+            if (r.getName().equals("admin")) {
+                isAdmin = true;
+            }
+        }
+        if (isAdmin) {
+            page = productDao.findPage(start, limit);
+        } else {
+            page = productDao.findByAccountId(id, start, limit);
+        }
+        List<Product> list=page.getList();
+        Integer[] productIds = new Integer[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            productIds[i] = list.get(i).getId();
+        }
+        List<SensorData> dataList = sensorDataDao.findLatestByProductIds(productIds);
+        if (dataList.isEmpty()) {
+            return page;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            int originId = list.get(i).getId();
+            for (SensorData sensorData : dataList) {
+                int pid = sensorData.getProduct().getId();
+                if (pid == originId) {
+                    list.get(i).setData(sensorData);
+                }
+            }
+        }
+        return page;
+    }
 
     @Override
     @Transactional
@@ -66,39 +109,5 @@ public class ProductService extends AbstractCurdServiceSupport<Product> implemen
         update(origin);
     }
 
-    @Override
-    @Transactional
-    public List<Product> findByAccountId(int id) {
-        Account account = accountDao.get(id);
-        List<Role> roles = account.getRoleList();
-        boolean isAdmin = false;
-        for (Role r : roles
-                ) {
-            if (r.getName().equals("admin")) {
-                isAdmin = true;
-            }
-        }
-        if (isAdmin) {
-            return productDao.findAll();
-        } else {
-            return productDao.findByAccountId(id);
-        }
-    }
 
-    @Override
-    @Transactional
-    public void addSensorData(String imei,String[] arrays) throws ImeiNotFoundException {
-        Product product = productDao.getByImei(imei);
-        if (product == null) {
-            throw new ImeiNotFoundException();
-        }
-        Document document = documentDao.findLatestByProductId(product.getId());
-        long timestamp = System.currentTimeMillis();
-        if (document == null || (timestamp - document.getStart()) > ONE_HOUR) {
-            documentDao.add(product.getId(), arrays);
-        } else {
-            documentDao.update(document, arrays);
-        }
-
-    }
 }

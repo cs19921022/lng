@@ -3,7 +3,7 @@ package cn.edu.hdu.lab505.innovation.service;
 import cn.edu.hdu.lab505.innovation.common.AbstractCurdServiceSupport;
 import cn.edu.hdu.lab505.innovation.common.ICurdDaoSupport;
 import cn.edu.hdu.lab505.innovation.dao.IRoleDao;
-import cn.edu.hdu.lab505.innovation.domain.domain.Role;
+import cn.edu.hdu.lab505.innovation.domain.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

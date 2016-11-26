@@ -1,6 +1,6 @@
 package cn.edu.hdu.lab505.innovation.controller.admin;
 
-import cn.edu.hdu.lab505.innovation.domain.domain.Product;
+import cn.edu.hdu.lab505.innovation.domain.Product;
 import cn.edu.hdu.lab505.innovation.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 

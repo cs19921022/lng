@@ -1,10 +1,9 @@
 package cn.edu.hdu.lab505.innovation.controller.admin;
 
-import cn.edu.hdu.lab505.innovation.domain.domain.Account;
+import cn.edu.hdu.lab505.innovation.domain.Account;
 import cn.edu.hdu.lab505.innovation.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.security.auth.login.CredentialExpiredException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;

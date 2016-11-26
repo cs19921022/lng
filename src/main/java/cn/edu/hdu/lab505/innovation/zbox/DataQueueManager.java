@@ -10,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class DataQueueManager {
     private BlockingQueue<byte[]> queue;
-    private static final int capacity = 50;
+    private static final int capacity = 100;
     private volatile static DataQueueManager dataQueueManager;
     private static final Logger LOGGER = Logger.getLogger(DataQueueManager.class);
 
