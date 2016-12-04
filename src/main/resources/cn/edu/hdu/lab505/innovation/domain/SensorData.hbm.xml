@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-2 15:15:29 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+
+    <class name="cn.edu.hdu.lab505.innovation.domain.SensorData" table="T_SENSORDATA" entity-name="active">
+        <id name="id" type="long">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="storageLiquidLevel1" type="java.lang.Float">
+            <column name="storageLiquidLevel1"/>
+        </property>
+        <property name="storageLiquidLevel2" type="java.lang.Float">
+            <column name="storageLiquidLevel2"/>
+        </property>
+        <property name="storagePressure1" type="java.lang.Float">
+            <column name="storagePressure1"/>
+        </property>
+        <property name="storagePressure2" type="java.lang.Float">
+            <column name="storagePressure2"/>
+        </property>
+        <property name="gasifyPressure" type="java.lang.Float">
+            <column name="gasifyPressure"/>
+        </property>
+        <property name="gasifyTemperature" type="java.lang.Float">
+            <column name="gasifyTemperature"/>
+        </property>
+        <property name="outValve1" type="java.lang.String">
+            <column name="outValve1"/>
+        </property>
+        <property name="outValve2" type="java.lang.String">
+            <column name="outValve2"/>
+        </property>
+        <property name="inValve1" type="java.lang.String">
+            <column name="inValve1"/>
+        </property>
+        <property name="inValve2" type="java.lang.String">
+            <column name="inValve2"/>
+        </property>
+        <property name="storageValve1" type="java.lang.String">
+            <column name="storageValve1"/>
+        </property>
+        <property name="storageValve2" type="java.lang.String">
+            <column name="storageValve2"/>
+        </property>
+        <property name="flowCutValve" type="java.lang.String">
+            <column name="flowCutValve"/>
+        </property>
+        <property name="totalFlow" type="java.lang.Float">
+            <column name="totalFlow"/>
+        </property>
+        <property name="instantFlow" type="java.lang.Float">
+            <column name="instantFlow"/>
+        </property>
+        <property name="temperature1" type="java.lang.Float">
+            <column name="temperature1"/>
+        </property>
+        <property name="pressure" type="java.lang.Float">
+            <column name="pressure"/>
+        </property>
+        <property name="temperature2" type="java.lang.Float">
+            <column name="temperature2"/>
+        </property>
+        <property name="temperature3" type="java.lang.Float">
+            <column name="temperature3"/>
+        </property>
+        <property name="fireDetector" type="java.lang.String">
+            <column name="fireDetector"/>
+        </property>
+        <property name="combustibleGasDetector" type="java.lang.String">
+            <column name="combustibleGasDetector"/>
+        </property>
+        <property name="longitude" type="java.lang.Float">
+            <column name="longitude"/>
+        </property>
+        <property name="latitude" type="java.lang.Float">
+            <column name="latitude"/>
+        </property>
+        <property name="massFlow" type="java.lang.Float">
+            <column name="massFlow"/>
+        </property>
+        <property name="volumeFlow" type="java.lang.Float">
+            <column name="volumeFlow"/>
+        </property>
+        <property name="gaugedVolumeFlow" type="java.lang.Float">
+            <column name="gaugedVolumeFlow"/>
+        </property>
+        <property name="density" type="java.lang.Float">
+            <column name="density"/>
+        </property>
+        <property name="referenceDensity" type="java.lang.Float">
+            <column name="referenceDensity"/>
+        </property>
+        <property name="temperature" type="java.lang.Float">
+            <column name="temperature"/>
+        </property>
+        <property name="pressure2" type="java.lang.Float">
+            <column name="pressure2"/>
+        </property>
+        <property name="totalMassFlow" type="java.lang.Float">
+            <column name="totalMassFlow"/>
+        </property>
+        <property name="totalVolumeFlow" type="java.lang.Float">
+            <column name="totalVolumeFlow"/>
+        </property>
+        <property name="totalGaugedVolumeFlow" type="java.lang.Float">
+            <column name="totalGaugedVolumeFlow"/>
+        </property>
+        <property name="productId" type="java.lang.Integer" not-null="true">
+            <column name="product_id" index="product_id_date_index"/>
+        </property>
+        <property name="date" type="java.util.Date">
+            <column name="date" index="product_id_date_index"/>
+        </property>
+    </class>
+    <class name="cn.edu.hdu.lab505.innovation.domain.SensorData" table="T_SENSORDATA_HISTORY" entity-name="history">
+        <id name="id" type="long">
+            <column name="id"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="storageLiquidLevel1" type="java.lang.Float">
+            <column name="storageLiquidLevel1"/>
+        </property>
+        <property name="storageLiquidLevel2" type="java.lang.Float">
+            <column name="storageLiquidLevel2"/>
+        </property>
+        <property name="storagePressure1" type="java.lang.Float">
+            <column name="storagePressure1"/>
+        </property>
+        <property name="storagePressure2" type="java.lang.Float">
+            <column name="storagePressure2"/>
+        </property>
+        <property name="gasifyPressure" type="java.lang.Float">
+            <column name="gasifyPressure"/>
+        </property>
+        <property name="gasifyTemperature" type="java.lang.Float">
+            <column name="gasifyTemperature"/>
+        </property>
+        <property name="outValve1" type="java.lang.String">
+            <column name="outValve1"/>
+        </property>
+        <property name="outValve2" type="java.lang.String">
+            <column name="outValve2"/>
+        </property>
+        <property name="inValve1" type="java.lang.String">
+            <column name="inValve1"/>
+        </property>
+        <property name="inValve2" type="java.lang.String">
+            <column name="inValve2"/>
+        </property>
+        <property name="storageValve1" type="java.lang.String">
+            <column name="storageValve1"/>
+        </property>
+        <property name="storageValve2" type="java.lang.String">
+            <column name="storageValve2"/>
+        </property>
+        <property name="flowCutValve" type="java.lang.String">
+            <column name="flowCutValve"/>
+        </property>
+        <property name="totalFlow" type="java.lang.Float">
+            <column name="totalFlow"/>
+        </property>
+        <property name="instantFlow" type="java.lang.Float">
+            <column name="instantFlow"/>
+        </property>
+        <property name="temperature1" type="java.lang.Float">
+            <column name="temperature1"/>
+        </property>
+        <property name="pressure" type="java.lang.Float">
+            <column name="pressure"/>
+        </property>
+        <property name="temperature2" type="java.lang.Float">
+            <column name="temperature2"/>
+        </property>
+        <property name="temperature3" type="java.lang.Float">
+            <column name="temperature3"/>
+        </property>
+        <property name="fireDetector" type="java.lang.String">
+            <column name="fireDetector"/>
+        </property>
+        <property name="combustibleGasDetector" type="java.lang.String">
+            <column name="combustibleGasDetector"/>
+        </property>
+        <property name="longitude" type="java.lang.Float">
+            <column name="longitude"/>
+        </property>
+        <property name="latitude" type="java.lang.Float">
+            <column name="latitude"/>
+        </property>
+        <property name="massFlow" type="java.lang.Float">
+            <column name="massFlow"/>
+        </property>
+        <property name="volumeFlow" type="java.lang.Float">
+            <column name="volumeFlow"/>
+        </property>
+        <property name="gaugedVolumeFlow" type="java.lang.Float">
+            <column name="gaugedVolumeFlow"/>
+        </property>
+        <property name="density" type="java.lang.Float">
+            <column name="density"/>
+        </property>
+        <property name="referenceDensity" type="java.lang.Float">
+            <column name="referenceDensity"/>
+        </property>
+        <property name="temperature" type="java.lang.Float">
+            <column name="temperature"/>
+        </property>
+        <property name="pressure2" type="java.lang.Float">
+            <column name="pressure2"/>
+        </property>
+        <property name="totalMassFlow" type="java.lang.Float">
+            <column name="totalMassFlow"/>
+        </property>
+        <property name="totalVolumeFlow" type="java.lang.Float">
+            <column name="totalVolumeFlow"/>
+        </property>
+        <property name="totalGaugedVolumeFlow" type="java.lang.Float">
+            <column name="totalGaugedVolumeFlow"/>
+        </property>
+
+        <property name="date" type="java.util.Date">
+            <column name="date" index="product_id_date_index"/>
+        </property>
+
+        <property name="productId" type="java.lang.Integer">
+            <column name="product_id" index="product_id_date_index"/>
+        </property>
+
+    </class>
+</hibernate-mapping>

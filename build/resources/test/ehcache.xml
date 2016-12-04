@@ -1,0 +1,22 @@
+<ehcache> 
+    <defaultCache 
+            maxElementsInMemory="10000" 
+            eternal="true" 
+            overflowToDisk="true"                                                                        
+            memoryStoreEvictionPolicy="LFU" />
+    <cache name="token" 
+            maxElementsInMemory="10000" 
+            eternal="true" 
+            overflowToDisk="true"                                                                        
+            memoryStoreEvictionPolicy="LFU" />
+     <cache name="account" 
+            maxElementsInMemory="10000" 
+            eternal="true" 
+            overflowToDisk="true"                                                                        
+            memoryStoreEvictionPolicy="LFU" />
+	<cache name="recommExpert"  
+            maxElementsInMemory="10000" 
+            eternal="true" 
+            overflowToDisk="true"                                                                        
+            memoryStoreEvictionPolicy="LFU" />
+</ehcache> 

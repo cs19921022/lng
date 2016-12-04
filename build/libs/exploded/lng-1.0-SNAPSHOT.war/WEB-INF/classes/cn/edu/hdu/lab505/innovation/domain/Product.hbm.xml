@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-2 15:15:29 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="cn.edu.hdu.lab505.innovation.domain.Product" table="T_PRODUCT">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="java.lang.String">
+            <column name="name"/>
+        </property>
+        <property name="specification" type="java.lang.String">
+            <column name="specification"/>
+        </property>
+        <property name="imei" type="java.lang.String" not-null="true">
+            <column name="imei" index="imei_index" unique="true"/>
+        </property>
+        <property name="type" type="java.lang.String">
+            <column name="type"/>
+        </property>
+        <property name="region" type="java.lang.String">
+            <column name="region"/>
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address"/>
+        </property>
+        <property name="longitude" type="java.lang.String">
+            <column name="longitude"/>
+        </property>
+        <property name="latitude" type="java.lang.String">
+            <column name="latitude"/>
+        </property>
+        <many-to-one name="account" class="cn.edu.hdu.lab505.innovation.domain.Account">
+            <column name="account_id" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-2 15:15:29 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+
+    <class name="cn.edu.hdu.lab505.innovation.domain.Account" table="T_ACCOUNT">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="username" type="java.lang.String">
+            <column name="username" index="username_index"/>
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password"/>
+        </property>
+        <set name="roles" table="T_ACCOUNT_ROLE" lazy="false">
+            <key column="ACCOUNT_ID"/>
+            <many-to-many class="cn.edu.hdu.lab505.innovation.domain.Role" column="ROLE_ID"></many-to-many>
+        </set>
+        <list name="productList" inverse="false" cascade="delete" lazy="true">
+            <key>
+                <column name="account_id"/>
+            </key>
+            <list-index>
+                <column name="id"></column>
+            </list-index>
+            <one-to-many class="cn.edu.hdu.lab505.innovation.domain.Product"/>
+        </list>
+        <property name="name" type="java.lang.String">
+            <column name="name"/>
+        </property>
+        <property name="shortName" type="java.lang.String">
+            <column name="shortName"/>
+        </property>
+        <property name="region" type="java.lang.String">
+            <column name="region"/>
+        </property>
+        <property name="investmentScale" type="java.lang.String">
+            <column name="investmentScale"/>
+        </property>
+        <property name="investmentMethod" type="java.lang.String">
+            <column name="investmentMethod"/>
+        </property>
+        <property name="center" type="java.lang.String">
+            <column name="center"/>
+        </property>
+        <property name="settlementMode" type="java.lang.String">
+            <column name="settlementMode"/>
+        </property>
+        <property name="deliveryMethod" type="java.lang.String">
+            <column name="deliveryMethod"/>
+        </property>
+        <property name="earlyWarningThreshold" type="java.lang.String">
+            <column name="earlyWarningThreshold"/>
+        </property>
+        <property name="linkman" type="java.lang.String">
+            <column name="linkman"/>
+        </property>
+        <property name="contact" type="java.lang.String">
+            <column name="contact"/>
+        </property>
+        <property name="signedClient" type="java.lang.String">
+            <column name="signedClient"/>
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="status"/>
+        </property>
+        <property name="type" type="java.lang.String">
+            <column name="type"/>
+        </property>
+        <property name="progress" type="java.lang.String">
+            <column name="progress"/>
+        </property>
+        <property name="salesman" type="java.lang.String">
+            <column name="salesman"/>
+        </property>
+        <property name="industry" type="java.lang.String">
+            <column name="industry"/>
+        </property>
+        <property name="address" type="java.lang.String">
+            <column name="address"/>
+        </property>
+        <property name="contractUnitPrice" type="java.lang.String">
+            <column name="contractUnitPrice"/>
+        </property>
+        <property name="unit" type="java.lang.String">
+            <column name="unit"/>
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="remark"/>
+        </property>
+        <property name="operator" type="java.lang.String">
+            <column name="operator"/>
+        </property>
+        <property name="operationTime" type="java.util.Date">
+            <column name="operationTime"/>
+        </property>
+    </class>
+</hibernate-mapping>

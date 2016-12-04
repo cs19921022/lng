@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-12-2 15:15:29 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="cn.edu.hdu.lab505.innovation.domain.Role" table="T_ROLE">
+        <id name="id" type="int">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="java.lang.String" not-null="true">
+            <column name="name"/>
+        </property>
+        <set name="accounts" table="T_ACCOUNT_ROLE" inverse="true">
+            <key column="ROLE_ID"/>
+            <many-to-many class="cn.edu.hdu.lab505.innovation.domain.Account" column="ACCOUNT_ID"></many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>
