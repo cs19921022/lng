@@ -5,6 +5,7 @@ import cn.edu.hdu.lab505.innovation.common.Page;
 import cn.edu.hdu.lab505.innovation.domain.Product;
 import org.apache.commons.collections.map.HashedMap;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -53,6 +54,36 @@ public class ProductDao extends AbstractHibernateCurdDaoSupport<Product> impleme
 
         } else {
             return list.get(0);
+        }
+    }
+
+    @Override
+    public List<Product> getByName(String name) {
+
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Product.class);
+        detachedCriteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
+        //detachedCriteria.add(Restrictions.eq("name", name));
+        List<Product> list = (List<Product>) getHibernateTemplate().findByCriteria(detachedCriteria);
+        if (list.isEmpty()) {
+            return null;
+
+        } else {
+            return list;
+        }
+    }
+
+    @Override
+    public List<Product> getByName(int accountId, String name) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Product.class);
+        detachedCriteria.createAlias("account", "a");
+        detachedCriteria.add(Restrictions.like("name", name, MatchMode.ANYWHERE));
+        detachedCriteria.add(Restrictions.eq("a.id", accountId));
+        List<Product> list = (List<Product>) getHibernateTemplate().findByCriteria(detachedCriteria);
+        if (list.isEmpty()) {
+            return null;
+
+        } else {
+            return list;
         }
     }
 }

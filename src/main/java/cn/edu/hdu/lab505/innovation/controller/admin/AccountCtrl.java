@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class AccountCtrl {
     @Path("create")
     public void createAccount(Account account) {
         accountService.createAccount(account);
+        Response.status(Response.Status.CREATED);
     }
 
     @DELETE
@@ -40,5 +42,12 @@ public class AccountCtrl {
     @Path("findAll")
     public List<Account> findAllAccount() {
         return accountService.findAll();
+    }
+
+    @Path("findAccount/{name}")
+    @GET
+    public List<Account> findAccount(@PathParam("name") String name) {
+
+        return accountService.findByName(name);
     }
 }

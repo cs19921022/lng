@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public interface ISensorDataService extends ICurdServiceSupport<SensorData> {
 
+    void moveDataToHistory();
+
     void addSensorData(String imei, String[] arrays) throws ImeiNotFoundException;
 
     List<DataBean> findSerialData(int productId, int sensorNo, Date start, Date limit) throws SensorDataIndexOutOfBoundsException;

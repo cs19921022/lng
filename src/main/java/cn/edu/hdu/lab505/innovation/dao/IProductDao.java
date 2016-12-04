@@ -13,4 +13,8 @@ public interface IProductDao extends ICurdDaoSupport<Product> {
     Page<Product> findByAccountId(int id, int start, int limit);
 
     Product getByImei(String imei);
+
+    List<Product> getByName(String name);
+
+    List<Product> getByName(int accountId, String name);
 }

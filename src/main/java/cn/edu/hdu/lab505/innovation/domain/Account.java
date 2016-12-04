@@ -3,76 +3,41 @@ package cn.edu.hdu.lab505.innovation.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hhx on 2016/11/19.
  */
-@Entity
-@Table(name = "t_account", indexes = {@Index(columnList = "id,username")})
 public class Account implements Serializable {
-    @Id
-    @GeneratedValue
     private int id;//客户编号
-    @Column(unique = true, nullable = false)
     private String username;//登录名
-    @Column(nullable = false)
     private String password;//登录密码
-
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private List<Role> roleList = new ArrayList<Role>();
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Role> roles = new HashSet<Role>();
     @JsonIgnore
     private List<Product> productList = new ArrayList<Product>();
-    @Column
     private String name;//客户名称
-    @Column
     private String shortName;//客户简称
-    @Column
     private String region;//所属区域
-    @Column
     private String investmentScale;//投资规模
-    @Column
     private String investmentMethod;//产品投资方式
-    @Column
     private String center;//是否中心站
-    @Column
     private String settlementMode;//结算模式
-    @Column
     private String deliveryMethod;//配送方式
-    @Column
     private String earlyWarningThreshold;//预存款预警值
-    @Column
     private String linkman;//联系人
-    @Column
     private String contact;//联系电话
-    @Column
     private String signedClient;//签约客户
-    @Column
     private String status;//客户状态
-    @Column
     private String type;//客户类型
-    @Column
     private String progress;//客户进度
-    @Column
     private String salesman;//业务员
-    @Column
     private String industry;//行业
-    @Column
     private String address;//公司地址
-    @Column
     private String contractUnitPrice;//当前合同执行单价
-    @Column
     private String unit;//单位
-    @Column
     private String remark;//备注
-    @Column
     private String operator;//操作人
-    @Column
     private Date operationTime;//操作时间
 
     public int getId() {
@@ -109,12 +74,13 @@ public class Account implements Serializable {
         this.contact = contact;
     }
 
-    public List<Role> getRoleList() {
-        return roleList;
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleList(List<Role> roleList) {
-        this.roleList = roleList;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public List<Product> getProductList() {

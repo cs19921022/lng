@@ -44,7 +44,7 @@
         <property name="initialSize" value="${druid.initialSize}"/>
         <property name="minIdle" value="${druid.minIdle}"/>
         <property name="maxActive" value="${druid.maxActive}"/>
-        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="validationQuery" value="SELECT 'x'"/>
         <property name="maxWait" value="60000"/>
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
         <property name="timeBetweenEvictionRunsMillis" value="60000"/>
@@ -71,19 +71,21 @@
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hiberante.format_sql">true</prop>
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
+
         <!-- mappingDirectoryLocations 指定映射文件目录 -->
-        <!--<property name="mappingDirectoryLocations">
+        <property name="mappingDirectoryLocations">
             <list>
-                <value>classpath:cn/edu/hdu/grs/tdlab/remedy/domain/hbm/</value>
+                <value>classpath:cn/edu/hdu/lab505/innovation/domain</value>
             </list>
-        </property>-->
-        <property name="packagesToScan">
+        </property>
+        <!--<property name="packagesToScan">
             <list>
                 <value>cn.edu.hdu.lab505.innovation.domain</value>
             </list>
-        </property>
+        </property>-->
 
     </bean>
     <!-- 事务管理器 -->
@@ -142,23 +144,37 @@
     <bean id="statelessAuthcFilter" class="org.apache.shiro.web.filter.authc.StatelessFilter">
     </bean>
 
-    <!-- Morphia-->
-    <!-- <bean id="morphia" class="org.mongodb.morphia.Morphia">
-         <constructor-arg>
-             <set>
-                 <value type="java.lang.Class">cn.edu.hdu.lab505.innovation.domain.data.Document</value>
-             </set>
-         </constructor-arg>
-     </bean>
-     <bean id="mongoClient" class="com.mongodb.MongoClient">
-         <constructor-arg value="${mongo.host}"/>
-         <constructor-arg value="${mongo.port}"/>
-     </bean>
-     <bean id="datastore" class="org.mongodb.morphia.DatastoreImpl">
-         <constructor-arg ref="morphia"/>
-         <constructor-arg ref="mongoClient"/>
-         <constructor-arg value="${mongo.dbName}"/>
-     </bean>-->
+    <!--<bean name="targetQuartz" class=""/>
+
+    <bean id="simpleJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="targetQuartz"/>
+        <property name="targetMethod" value="printMessage"/>
+    </bean>-->
+
+    <!-- 定义触发器来管理任务Bean -->
+    <bean id="cronTriggerMoveData"
+          class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <!-- 使用嵌套Bean的方式来定义任务Bean -->
+            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+                <!-- 指定任务Bean的实现类 -->
+                <property name="jobClass" value="cn.edu.hdu.lab505.innovation.quartz.job.MoveDataJob"/>
+            </bean>
+        </property>
+        <!-- 指定Cron表达式：每月1日2时启动 -->
+        <!--s,m,h,dateOfMonth,month,dayOfWeek,year-->
+        <property name="cronExpression" value="0 0 2 1 * ? *"/>
+    </bean>
+
+
+    <!-- 执行实际的调度调度 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTriggerMoveData"/>
+            </list>
+        </property>
+    </bean>
 
     <bean id="springUtil" class="cn.edu.hdu.lab505.innovation.util.SpringUtil"/>
 

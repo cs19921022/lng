@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="lng:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="lng" external.system.module.type="sourceSet" external.system.module.version="1.0-SNAPSHOT" type="JAVA_MODULE" version="4">
+<module external.linked.project.id="lng:main" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="lng" external.system.module.type="sourceSet" external.system.module.version="lng" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/../../src/main/resources/applicationContext.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
+    <facet type="web" name="Web Gradle : lng-lng.war">
+      <configuration>
+        <descriptors>
+          <deploymentDescriptor name="web.xml" url="file://$MODULE_DIR$/../../src/main/webapp/WEB-INF/web.xml" />
+        </descriptors>
+        <webroots>
+          <root url="file://$MODULE_DIR$/../../src/main/webapp" relative="/" />
+        </webroots>
+      </configuration>
+    </facet>
+  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../../build/classes/main" />
     <exclude-output />
@@ -7,7 +26,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/resources" type="java-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Gradle: commons-beanutils:commons-beanutils:1.9.2" level="project" />
@@ -22,7 +41,6 @@
     <orderEntry type="library" name="Gradle: org.springframework:spring-web:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-orm:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework:spring-context-support:4.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Gradle: org.springframework:spring-test:4.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-core:1.2.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-web:1.2.2" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.shiro:shiro-spring:1.2.2" level="project" />
@@ -31,6 +49,8 @@
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.media:jersey-media-json-jackson:2.22.1" level="project" />
     <orderEntry type="library" name="Gradle: com.thetransactioncompany:cors-filter:2.5" level="project" />
     <orderEntry type="library" name="Gradle: com.alibaba:druid:1.0.23" level="project" />
+    <orderEntry type="library" name="Gradle: org.quartz-scheduler:quartz:2.2.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.quartz-scheduler:quartz-jobs:2.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-nop:1.7.12" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.servlet:javax.servlet-api:3.1.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.websocket:javax.websocket-api:1.0" level="project" />
@@ -71,6 +91,7 @@
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.5.4" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.5.4" level="project" />
     <orderEntry type="library" name="Gradle: com.thetransactioncompany:java-property-utils:1.9.1" level="project" />
+    <orderEntry type="library" name="Gradle: c3p0:c3p0:0.9.1.1" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.core:commands:3.3.0-I20070605-0010" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse:osgi:3.10.0-v20140606-1445" level="project" />
     <orderEntry type="library" name="Gradle: org.eclipse.core:jobs:3.6.0-v20140424-0053" level="project" />

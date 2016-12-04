@@ -1,42 +1,26 @@
 package cn.edu.hdu.lab505.innovation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by hhx on 2016/11/19.
  */
-@Entity
-@Table(name = "t_product", indexes = {@Index(columnList = "id,imei")})
 public class Product implements Serializable {
-    @Id
-    @GeneratedValue
     private int id;
-    @Column
     private String name;
-    @Column
     private String specification;
-    @Column(nullable = false, unique = true)
     private String imei;
-    @Column
     private String type;
-    @Column
     private String region;
-    @Column
     private String address;
-    @Column
     private String longitude;
-    @Column
     private String latitude;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "account_id",
-            foreignKey = @ForeignKey(name = "ACCOUNT_ID_FK"))
-    private Account account;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 
-    @Transient
+    private Account account;
+
     private SensorData data = new SensorData();
 
     public SensorData getData() {
@@ -126,10 +110,12 @@ public class Product implements Serializable {
         this.latitude = latitude;
     }
 
+    @JsonIgnore
     public Account getAccount() {
         return account;
     }
 
+    @JsonProperty
     public void setAccount(Account account) {
         this.account = account;
     }

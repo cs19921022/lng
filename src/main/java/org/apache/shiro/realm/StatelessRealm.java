@@ -22,7 +22,7 @@ public class StatelessRealm extends AuthorizingRealm {
             PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Account a = (Account) principals.getPrimaryPrincipal();
-        for (Role r : a.getRoleList()) {
+        for (Role r : a.getRoles()) {
             authorizationInfo.addRole(r.getName());
         }
         return authorizationInfo;

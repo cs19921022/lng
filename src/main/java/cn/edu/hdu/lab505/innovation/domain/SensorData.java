@@ -2,103 +2,67 @@ package cn.edu.hdu.lab505.innovation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by hhx on 2016/11/24.
  */
-@Entity
-@Table(name = "t_sensorData", indexes = {@Index(columnList = "product_id,date")})
 public class SensorData implements Serializable {
-    @Id
-    @GeneratedValue
     @JsonIgnore
     private long id;
-    @Column
     private Float storageLiquidLevel1;//储罐液位1
-    @Column
     private Float storageLiquidLevel2;//储罐液位2
-    @Column
     private Float storagePressure1;//储罐压力1
-    @Column
     private Float storagePressure2;//储罐压力2
-    @Column
     private Float gasifyPressure;//气化后压力
-    @Column
     private Float gasifyTemperature;//气化后温度
-    @Column
     private String outValve1;//出口电磁阀1
-    @Column
     private String outValve2;//出口电磁阀2
-    @Column
     private String inValve1;//进口电磁阀1
-    @Column
     private String inValve2;//进口电磁阀1
-    @Column
     private String storageValve1;//储罐增压阀1
-    @Column
     private String storageValve2;//储罐增压阀1
-    @Column
     private String flowCutValve;//流量计切断阀
-    @Column
     private Float totalFlow;//累计流量
-    @Column
     private Float instantFlow;//瞬时流量
-    @Column
     private Float temperature1;//温度1
-    @Column
     private Float pressure;//压力
-    @Column
     private Float temperature2;//温度2
-    @Column
     private Float temperature3;//温度3
-    @Column
     private String fireDetector;//火焰探测
-    @Column
     private String combustibleGasDetector;//可燃气体探测
-    @Column
     private Float longitude;//GPS的经度
-    @Column
     private Float latitude;//GPS的纬度
-    @Column
     private Float massFlow;//质量流量
-    @Column
     private Float volumeFlow;//体积流量
-    @Column
     private Float gaugedVolumeFlow;//校准体积流量
-    @Column
     private Float density;//密度
-    @Column
     private Float referenceDensity;//参考密度
-    @Column
     private Float temperature;//温度
-    @Column
     private Float pressure2;//压力
-    @Column
     private Float totalMassFlow;//累计质量流量
-    @Column
     private Float totalVolumeFlow;//累积体积流量
-    @Column
     private Float totalGaugedVolumeFlow;//累积校准体积流量
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id",
-            foreignKey = @ForeignKey(name = "PRODUCT_ID_FK"))
     @JsonIgnore
     private Product product;
-
-
-    @Column
     private Date date;
 
-
-    public SensorData() {
-    }
+    /**
+     * 不使用外键，为了分区!
+     */
+    @JsonIgnore
+    private int productId;
 
     public long getId() {
         return id;
+    }
+
+    public SensorData(long id) {
+        this.id = id;
+    }
+
+    public SensorData() {
     }
 
     public void setId(long id) {
@@ -383,5 +347,13 @@ public class SensorData implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 }

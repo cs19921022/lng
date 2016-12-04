@@ -2,25 +2,18 @@ package cn.edu.hdu.lab505.innovation.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by hhx on 2016/11/19.
  */
-@Entity
-@Table(name = "t_role")
 public class Role implements Serializable {
-    @Id
-    @GeneratedValue()
     private int id;
-    @Column(nullable = false, unique = true)
     private String name;
-    @ManyToMany(mappedBy = "roleList")
     @JsonIgnore
-    private List<Account> accountList = new ArrayList<Account>();
+    private Set<Account> accounts = new HashSet<Account>();
 
     public Role(int id, String name) {
         this.id = id;
@@ -50,11 +43,11 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public List<Account> getAccountList() {
-        return accountList;
+    public Set<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccountList(List<Account> accountList) {
-        this.accountList = accountList;
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
     }
 }

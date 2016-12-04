@@ -18,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.security.auth.login.AccountNotFoundException;
 import javax.security.auth.login.CredentialExpiredException;
 import javax.security.auth.login.FailedLoginException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by hhx on 2016/11/19.
@@ -112,9 +109,9 @@ public class AccountService extends AbstractCurdServiceSupport<Account> implemen
         try {
             a.setOperationTime(new Date());
             accountDao.insert(a);
-            List<Role> list = new ArrayList<>();
+            Set<Role> list = new HashSet<>();
             list.add(new Role(2));
-            a.setRoleList(list);
+            a.setRoles(list);
             return a.getId();
         } catch (DataIntegrityViolationException e) {
             throw new DuplicateKeyException(a.getUsername() + " duplicate");
@@ -127,6 +124,15 @@ public class AccountService extends AbstractCurdServiceSupport<Account> implemen
         Account origin = get(entity.getId());
         origin.setPassword(entity.getPassword());
         update(origin);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Account> findByName(String name) {
+        if (name != null) {
+            return accountDao.getByName(name);
+        }
+        return null;
     }
 
     public IAccountDao getAccountDao() {

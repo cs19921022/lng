@@ -5,11 +5,13 @@ package cn.edu.hdu.lab505.innovation.controller.user;
  */
 
 import cn.edu.hdu.lab505.innovation.common.Page;
+import cn.edu.hdu.lab505.innovation.domain.Account;
 import cn.edu.hdu.lab505.innovation.domain.DataBean;
 import cn.edu.hdu.lab505.innovation.domain.Product;
 import cn.edu.hdu.lab505.innovation.service.Exception.SensorDataIndexOutOfBoundsException;
 import cn.edu.hdu.lab505.innovation.service.IProductService;
 import cn.edu.hdu.lab505.innovation.service.ISensorDataService;
+import net.sf.ehcache.Cache;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +32,8 @@ public class ProductCtrl {
     private IProductService productService;
     @Autowired
     private ISensorDataService sensorDataService;
+    @Autowired
+    private Cache tokenCache;
 
     @Path("getProduct")
     @GET
@@ -53,5 +57,11 @@ public class ProductCtrl {
 
     }
 
+    @Path("findProduct/{name}")
+    @GET
+    public List<Product> findProduct(@PathParam("name") String name, @HeaderParam("token") String token) {
+        Account account = (Account) tokenCache.get(token).getObjectValue();
+        return (List<Product>) productService.findByName(account, name);
+    }
 
 }

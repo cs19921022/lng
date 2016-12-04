@@ -23,10 +23,7 @@ import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hhx on 2016/11/20.
@@ -71,7 +68,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    @Transactional
+    //@Transactional
     @Rollback(false)
     public void roleTest() {
         Role role = new Role(1, "admin");
@@ -86,11 +83,11 @@ public class AccountServiceTest {
     public void accountTest() {
         Account account = new Account();
         Role role = new Role(1, "admin");
-        List<Role> list = new ArrayList<>();
+        Set<Role> list = new HashSet<>();
         list.add(role);
         account.setUsername("www");
         account.setPassword("1234");
-        account.setRoleList(list);
+        account.setRoles(list);
         accountService.insert(account);
     }
 
@@ -120,10 +117,12 @@ public class AccountServiceTest {
 
     @Test
     public void testFindData() throws SensorDataIndexOutOfBoundsException, ParseException {
-       Integer[] ids = {1, 2};
-        List<Product> list = productService.findByAccountId(1);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String s1 = "2016-11-25 14:54:44";
+        String s2 = "2016-12-25 14:58:49";
+
+        sensorDataService.findSerialData(1, 1, simpleDateFormat.parse(s1), simpleDateFormat.parse(s2));
         System.out.println();
-     // sensorDataDao.test();
 
     }
 

@@ -2,6 +2,7 @@ package cn.edu.hdu.lab505.innovation.service;
 
 import cn.edu.hdu.lab505.innovation.common.AbstractCurdServiceSupport;
 import cn.edu.hdu.lab505.innovation.common.ICurdDaoSupport;
+import cn.edu.hdu.lab505.innovation.common.Page;
 import cn.edu.hdu.lab505.innovation.dao.IProductDao;
 import cn.edu.hdu.lab505.innovation.dao.ISensorDataDao;
 import cn.edu.hdu.lab505.innovation.domain.DataBean;
@@ -17,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by hhx on 2016/11/24.
@@ -32,9 +31,31 @@ public class SensorDataService extends AbstractCurdServiceSupport<SensorData> im
     @Autowired
     private IProductDao productDao;
 
+    private static final long MONTH = 1000 * 60 * 60 * 24 * 31;
+
     @Override
     protected ICurdDaoSupport<SensorData> getCurdDao() {
         return sensorDataDao;
+    }
+
+    @Override
+    @Transactional
+    public void moveDataToHistory() {
+        final int pageSize = 100000;
+        int start = 0;
+        Date date = new Date(System.currentTimeMillis() - MONTH);
+        Page<SensorData> page = sensorDataDao.findSensorDataLeDate("active", date, start, start + pageSize);
+        while (page.getList().size() > 0) {
+            List<Long> list = new ArrayList<>(pageSize);
+            for (SensorData sensorData : page.getList()) {
+                list.add(sensorData.getId());
+            }
+            sensorDataDao.batchInsert("history", page.getList());
+            sensorDataDao.batchDelete("active", list);
+            start += pageSize;
+            page = sensorDataDao.findSensorDataLeDate("active", date, start, start + pageSize);
+
+        }
     }
 
     @Override
@@ -72,7 +93,7 @@ public class SensorDataService extends AbstractCurdServiceSupport<SensorData> im
 
         }
         sensorData.setDate(new Date());
-        sensorData.setProduct(product);
+        sensorData.setProductId(product.getId());
         sensorDataDao.insert(sensorData);
     }
 

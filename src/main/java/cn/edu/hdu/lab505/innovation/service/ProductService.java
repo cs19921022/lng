@@ -10,7 +10,7 @@ import cn.edu.hdu.lab505.innovation.domain.Account;
 import cn.edu.hdu.lab505.innovation.domain.Product;
 import cn.edu.hdu.lab505.innovation.domain.Role;
 import cn.edu.hdu.lab505.innovation.domain.SensorData;
-import cn.edu.hdu.lab505.innovation.service.Exception.ImeiNotFoundException;
+import net.sf.ehcache.Cache;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,12 +18,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by hhx on 2016/11/19.
@@ -39,13 +36,11 @@ public class ProductService extends AbstractCurdServiceSupport<Product> implemen
 
     @Autowired
     private ISensorDataDao sensorDataDao;
+    @Autowired
+    private Cache tokenCache;
 
-
-    @Override
-    @Transactional
-    public Page<Product> findByAccountId(int id, int start, int limit) {
-        Account account = accountDao.get(id);
-        List<Role> roles = account.getRoleList();
+    private boolean isAdmin(Account account) {
+        Set<Role> roles = account.getRoles();
         Page<Product> page = null;
         boolean isAdmin = false;
         for (Role r : roles
@@ -54,12 +49,23 @@ public class ProductService extends AbstractCurdServiceSupport<Product> implemen
                 isAdmin = true;
             }
         }
+        return isAdmin;
+    }
+
+    ;
+
+    @Override
+    @Transactional
+    public Page<Product> findByAccountId(int id, int start, int limit) {
+        Page<Product> page = null;
+        Account account = accountDao.get(id);
+        boolean isAdmin = isAdmin(account);
         if (isAdmin) {
             page = productDao.findPage(start, limit);
         } else {
             page = productDao.findByAccountId(id, start, limit);
         }
-        List<Product> list=page.getList();
+        List<Product> list = page.getList();
         Integer[] productIds = new Integer[list.size()];
         for (int i = 0; i < list.size(); i++) {
             productIds[i] = list.get(i).getId();
@@ -109,5 +115,22 @@ public class ProductService extends AbstractCurdServiceSupport<Product> implemen
         update(origin);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> findByName(Account account, String name) {
+        if (account == null) {
+            return new ArrayList<>();
+        }
+        boolean isAdmin = isAdmin(account);
+
+        if (name != null) {
+            if (isAdmin) {
+                return productDao.getByName(name);
+            } else {
+                return productDao.getByName(account.getId(), name);
+            }
+        }
+        return new ArrayList<>();
+    }
 
 }
