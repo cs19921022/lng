@@ -32,7 +32,7 @@
         <property name="latitude" type="java.lang.String">
             <column name="latitude"/>
         </property>
-        <many-to-one name="account" class="cn.edu.hdu.lab505.innovation.domain.Account">
+        <many-to-one name="account" class="cn.edu.hdu.lab505.innovation.domain.Account" lazy="false">
             <column name="account_id" not-null="true"/>
         </many-to-one>
     </class>

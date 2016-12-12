@@ -11,6 +11,12 @@ import java.util.List;
  */
 @Component
 public class ProtocolSupport {
+    private static final byte byte7F = 0x7F;
+    private static final byte byte5E = 0x5E;
+    private static final byte byte5F = 0x5F;
+    private static final byte byteDC = (byte) 0xDC;
+    private static final byte byteFB = (byte) 0xFB;
+    private static final byte byteFC = (byte) 0xFC;
 
     private byte[] byteArray;//数据帧
     private byte[] title;//指令头
@@ -53,7 +59,7 @@ public class ProtocolSupport {
         for (int i = 1; i < byteArray.length - 2; i++) {
             realCheckSum ^= byteArray[i];
         }
-        if (realCheckSum != checkSum[0]) {
+        if (realCheckSum != byteArray[byteArray.length - 2]) {
             isCorrect = false;
         } else {
             isCorrect = true;
@@ -101,17 +107,8 @@ public class ProtocolSupport {
         byteArray = bs;
     }
 
-    /**
-     * 转义
-     */
-    public void escape() {
+    public void escape7E7F() {
         List<Byte> byteList = new ArrayList<>(512);
-        final byte byte7F = 0x7F;
-        final byte byte5E = 0x5E;
-        final byte byte5F = 0x5F;
-        final byte byteDC = (byte) 0xDC;
-        final byte byteFB = (byte) 0xFB;
-        final byte byteFC = (byte) 0xFC;
         for (int i = 0; i < byteArray.length - 1; i++) {
             if (byteArray[i] == byte7F && byteArray[i + 1] == byte5E) {
                 byteList.add((byte) 0x7E);
@@ -119,7 +116,22 @@ public class ProtocolSupport {
             } else if (byteArray[i] == byte7F && byteArray[i + 1] == byte5F) {
                 byteList.add((byte) 0x7F);
                 i++;
-            } else if (byteArray[i] == byteDC && byteArray[i + 1] == byteFB) {
+            } else {
+                byteList.add(byteArray[i]);
+            }
+        }
+        byteList.add(byteArray[byteArray.length - 1]);
+        byte[] temp = new byte[byteList.size()];
+        for (int i = 0; i < byteList.size(); i++) {
+            temp[i] = byteList.get(i);
+        }
+        byteArray = temp;
+    }
+
+    public void escapeDBDC() {
+        List<Byte> byteList = new ArrayList<>(512);
+        for (int i = 0; i < byteArray.length - 1; i++) {
+            if (byteArray[i] == byteDC && byteArray[i + 1] == byteFB) {
                 byteList.add((byte) 0xDB);
                 i++;
             } else if (byteArray[i] == byteDC && byteArray[i + 1] == byteFC) {
@@ -137,12 +149,15 @@ public class ProtocolSupport {
         byteArray = temp;
     }
 
+
     public ProtocolSupport(byte[] byteArray) {
         this.byteArray = byteArray;
         cutFrame();
-        escape();
-        resolve();
+        escape7E7F();
+
         check();
+        escapeDBDC();
+        resolve();
     }
 
     public ProtocolSupport() {
@@ -151,9 +166,11 @@ public class ProtocolSupport {
     public void setByteArray(byte[] byteArray) {
         this.byteArray = byteArray;
         cutFrame();
-        escape();
-        resolve();
+        escape7E7F();
+
         check();
+        escapeDBDC();
+        resolve();
     }
 
     public byte[] getByteArray() {

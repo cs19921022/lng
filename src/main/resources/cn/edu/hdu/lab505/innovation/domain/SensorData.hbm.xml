@@ -60,11 +60,11 @@
         <property name="pressure" type="java.lang.Float">
             <column name="pressure"/>
         </property>
-        <property name="temperature2" type="java.lang.Float">
-            <column name="temperature2"/>
+        <property name="surplusFlow" type="java.lang.Float">
+            <column name="surplusFlow"/>
         </property>
-        <property name="temperature3" type="java.lang.Float">
-            <column name="temperature3"/>
+        <property name="rechargeTime" type="java.lang.String">
+            <column name="rechargeTime"/>
         </property>
         <property name="fireDetector" type="java.lang.String">
             <column name="fireDetector"/>
@@ -171,11 +171,11 @@
         <property name="pressure" type="java.lang.Float">
             <column name="pressure"/>
         </property>
-        <property name="temperature2" type="java.lang.Float">
-            <column name="temperature2"/>
+        <property name="surplusFlow" type="java.lang.Float">
+            <column name="surplusFlow"/>
         </property>
-        <property name="temperature3" type="java.lang.Float">
-            <column name="temperature3"/>
+        <property name="rechargeTime" type="java.lang.String">
+            <column name="rechargeTime"/>
         </property>
         <property name="fireDetector" type="java.lang.String">
             <column name="fireDetector"/>

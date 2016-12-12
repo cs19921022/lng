@@ -110,12 +110,12 @@ public class Product implements Serializable {
         this.latitude = latitude;
     }
 
-    @JsonIgnore
+
     public Account getAccount() {
         return account;
     }
 
-    @JsonProperty
+
     public void setAccount(Account account) {
         this.account = account;
     }

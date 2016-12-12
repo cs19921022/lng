@@ -72,7 +72,7 @@ public class SensorDataService extends AbstractCurdServiceSupport<SensorData> im
             Field field = fields[i];
             String fieldName = field.getName();
             try {
-                if ((i >= 7 && i <= 13) || (i >= 20 && i <= 21)) {
+                if ((i >= 7 && i <= 13) || (i >= 20 && i <= 21) || i == 19) {
                     Method method = sensorDataClass.getMethod("set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1, fieldName.length()), String.class);
                     method.invoke(sensorData, arrays[i - 1]);
                 } else {

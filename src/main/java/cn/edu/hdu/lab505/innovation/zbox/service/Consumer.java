@@ -51,9 +51,12 @@ public class Consumer implements Runnable {
             byte dataId = dataFrame.getDataId();
             byte[] data = dataFrame.getData();
             if ((dataId > 0 && dataId < 7) || (dataId > 13 && dataId < 20) || (dataId > 21 && dataId < 34)) {
-                //浮点数
                 try {
-                    arrays[dataId - 1] = String.valueOf(ByteUtil.toFloat(data));
+                    if(dataId==19){
+                        arrays[dataId - 1]=ByteUtil.byteToString(data);
+                    }else{
+                        arrays[dataId - 1] = String.valueOf(ByteUtil.toFloat(data));
+                    }
                 } catch (Exception e) {
                     LOGGER.error(e);
                 }
@@ -90,11 +93,11 @@ public class Consumer implements Runnable {
             }
             byte[] function = protocolSupport.getFunction();
             if (function[0] == 0x00) {
-                try {
+                //try {
                     insertData(protocolSupport.getContent());
-                } catch (Exception e) {
-                    LOGGER.error(e);
-                }
+                //} catch (Exception e) {
+                  //  LOGGER.error(e);
+                //}
 
             }
         }

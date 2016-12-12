@@ -77,7 +77,7 @@ public class ProductService extends AbstractCurdServiceSupport<Product> implemen
         for (int i = 0; i < list.size(); i++) {
             int originId = list.get(i).getId();
             for (SensorData sensorData : dataList) {
-                int pid = sensorData.getProduct().getId();
+                int pid = sensorData.getProductId();
                 if (pid == originId) {
                     list.get(i).setData(sensorData);
                 }
